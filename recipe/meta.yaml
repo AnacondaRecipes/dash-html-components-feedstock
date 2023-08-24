@@ -1,7 +1,7 @@
 {% set name = "dash-html-components" %}
 {% set filename = "dash_html_components" %}
-{% set version = "1.0.2" %}
-{% set sha256 = "8992097a044f5add21f86ccbe0caef8c499394a04d5f2b6cc4458a42f37cca98" %}
+{% set version = "2.0.0" %}
+{% set sha256 = "8703a601080f02619a6390998e0b3da4a5daabe97a1fd7a9cebc09d015f26e50" %}
 
 package:
   name: {{ name|lower }}
@@ -14,31 +14,35 @@ source:
 
 build:
   number: 0
-  script: {{ PYTHON }} -m pip install . --no-deps -vv
-  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
-  build:
+  host:
     - python
     - setuptools
     - pip
+    - wheel
   run:
     - python
-    - dash  # not listed in the setup.py
+    - dash  # not listed in the setup.py but required to import dash_html_components
 
 test:
+  requires:
+    - pip
   imports:
     - dash_html_components
+  commands:
+    - pip check
 
 about:
-  home: https://plot.ly/dash
+  home: https://github.com/plotly/dash-html-components
   dev_url: https://github.com/plotly/dash-html-components
+  doc_url: https://github.com/plotly/dash-html-components/blob/dev/README.md
   license: MIT
   license_family: MIT
-  # TODO : Update this once plotly packages it correctly:
-  # https://github.com/plotly/dash-html-components/pull/46
-  license_file: '{{ environ["RECIPE_DIR"] }}/LICENSE.txt'
+  license_file: LICENSE.md
   summary: 'Dash UI HTML component suite'
+  description: 'Dash UI HTML component suite'
 
 extra:
   recipe-maintainers:
